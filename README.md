@@ -8,23 +8,14 @@ This repository is the official implementation of [Reducing Recommendation Inequ
 
 To install requirements:
 
+Gurobi for linear programming
 
-## Training
+CVXPY for convex programming
 
-To train the model(s) in the paper, run this command:
+## Create recommendations together with performance metrics
 
-```train
-python train.py --input-data <path_to_data> --alpha 10 --beta 20
 ```
-
->📋  Describe how to train the models, with example commands on how to train the models in your paper, including the full training procedure and appropriate hyperparameters.
-
-## Evaluation
-
-To evaluate my model on ImageNet, run:
-
-```eval
-python eval.py --model-file mymodel.pth --benchmark imagenet
+python main.py -eta 0.5 -f 20 -j 20 -runs 100 -Y 1000 -M 32 -gamma 0.2 -m SAA
 ```
 
 ## Results

@@ -32,10 +32,31 @@ class ESTIMATE():
             model, x = self.match_opt.matching(True, utility_random)
             res_x = model.getAttr('X', x)
             for key, value in res_x.items():
-                persist_value[key] += value / Y
+                persist_value[key] += np.round(value / Y, 3)
 
-        res = {key : np.round(persist_value[key], 3) for key in persist_value}
         end_time = time.time()
         print("Time of SAA: " + str(end_time - start_time))
 
-        return res
+        return persist_value
+
+    def GRE(self):
+        persist_value = defaultdict(float)
+        for i in self.men:
+            for j in self.women:
+                persist_value[i, j] = self.utility[i, j]
+
+        return persist_value
+
+    def ENT(self):
+        persist_value = defaultdict(float)
+        res_x, res_obj = self.match_opt.RAM()
+        for i in range(len(self.men)):
+            for j in range(len(self.women)):
+                persist_value[self.men[i], self.women[j]] = res_x[i, j] * (len(self.men) + len(self.women))
+
+        return persist_value
+
+    def SLP(self, seed, Y, M):
+        persist_value = defaultdict(float)
+
+        return persist_value
