@@ -37,7 +37,7 @@ class ESTIMATE():
                 persist_value[key] += np.round(value / Y, 3)
 
         end_time = time.time()
-        print("Time of SAA: " + str(end_time - start_time))
+        #print("Time of SAA: " + str(end_time - start_time))
 
         return persist_value
 

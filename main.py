@@ -83,7 +83,7 @@ def show_output(summary_acc, summary_distr, summary_cover, tops):
     ave_max = np.mean(np.max(np.array(summary_distr)[:, K, :], axis=1))
     ave_mean = np.mean(np.mean(np.array(summary_distr)[:, K, :], axis=1))
     ave_median = np.mean(np.median(np.array(summary_distr)[:, K, :], axis=1))
-    ave_std = np.mean(np.std(np.array(summary_distr)[:, K, :], axis=1))
+    ave_std = np.round(np.mean(np.std(np.array(summary_distr)[:, K, :], axis=1)), 2)
 
     print("recommendation count distribution for top %s: min %s, max %s, median %s, mean %s, std %s." % (tops[K], ave_min, ave_max, ave_median, ave_mean, ave_std))
 
