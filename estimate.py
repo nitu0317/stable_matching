@@ -4,6 +4,7 @@ from collections import *
 from itertools import chain, combinations
 import cvxpy as cp
 from opt import *
+from scenario import *
 import time
 
 class ESTIMATE():
@@ -14,6 +15,7 @@ class ESTIMATE():
         self.utility = utility
         self.leakage_arc = leakage_arc
         self.match_opt = MATCH_OPT(men, women, leakage_arc, eta, utility)
+        self.scenario = SCENARIO(men, women, leakage_arc, eta, utility)
 
     def SAA(self, seed, Y):
         persist_value = defaultdict(float)
@@ -58,5 +60,13 @@ class ESTIMATE():
 
     def SLP(self, seed, Y, M):
         persist_value = defaultdict(float)
+
+        cond_men, cond_women, prob_men, prob_women = self.scenario.preference_pair(seed, M, Y)
+        model, x, x_men, x_women = self.match_opt.matching_conditional_pair(cond_men, cond_women, prob_men, prob_women)
+        res_x = model.getAttr('X', x)
+        #res_x_men = model.getAttr('X', x_men)
+        #res_x_women = model.getAttr('X', x_women)
+        for key, value in res_x.items():
+            persist_value[key] = np.round(value, 5)
 
         return persist_value

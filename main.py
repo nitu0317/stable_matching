@@ -73,10 +73,10 @@ def evaluation(T, match_opt, men, women, eta, utility):
 
 def show_output(summary_acc, summary_distr, summary_cover, tops):
     ave_accuracy = np.round(np.mean(np.array(summary_acc), axis=0), 4)
-    print("recommendation accuracy: %s" % ave_accuracy)
+    print("recommendation accuracy with top K: %s" % ave_accuracy)
 
     ave_coverage = np.round(np.mean(np.array(summary_cover), axis=0), 4)
-    print("recommendation coverage: %s" % ave_coverage)
+    print("recommendation coverage with top K: %s" % ave_coverage)
 
     K = 4
     ave_min = np.mean(np.min(np.array(summary_distr)[:, K, :], axis=1))
@@ -91,10 +91,10 @@ def main():
     parser = argparse.ArgumentParser(description='stable_matching')
     parser.add_argument('--eta', '-eta', help='scale', default=0.5)
     parser.add_argument('--regime', help='mu range', default=(2, 4))
-    parser.add_argument('--N_men', '-f', help='number of freelancers', default=20)
-    parser.add_argument('--N_women', '-j', help='number of jobs', default=20)
-    parser.add_argument('--runs', '-runs', help='number of problem instances', default=5)
-    parser.add_argument('--Y', '-Y', help='number of samples in each instance', default=100)
+    parser.add_argument('--N_men', '-f', help='number of freelancers', default=30)
+    parser.add_argument('--N_women', '-j', help='number of jobs', default=30)
+    parser.add_argument('--runs', '-runs', help='number of problem instances', default=50)
+    parser.add_argument('--Y', '-Y', help='number of samples in each instance', default=500)
     parser.add_argument('--M', '-M', help='number of sparse scenarios', default=32)
     parser.add_argument('--T', '-T', help='number of evaluation realizations', default=100)
     parser.add_argument('--gamma', '-gamma', help='star proportion', default=0.2)
@@ -104,6 +104,7 @@ def main():
 
     summary_acc, summary_distr, summary_cover = [], [], []
     for run in range(args.runs):
+        print('Run %s' % run)
         seed = run
 
         ## setup models
